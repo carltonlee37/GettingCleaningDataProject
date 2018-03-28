@@ -60,4 +60,7 @@ run_analysis.R performs the following steps:
 * subject_train.txt
 3. Merges the test and train data tables using rbind() to create 3 data frames: xData, yData, and subjectData.
 4. Extracts all variables with mean or standard deviation measurements using grep() and regular expression to locate features containing mean() or std() and subsetting them into xData.
-5. Applies descriptive activity labels and variable names by 1) indexing the ativityLables table to the yData table; 2) using colnames() to names the subject and activity variables in subjectData and yData; and 3) and using colnames(), gsub(), and regular expressions to to substitute or remove parts of feature names (e.g. t=Time, f=Freq, remove - and ())
+5. Applies descriptive activity labels and variable names by 1) indexing the ativityLables table to the yData table; 2) using colnames() to names the subject and activity variables in subjectData and yData; and 3) and using colnames(), gsub(), and regular expressions to to substitute or remove parts of feature names (e.g. t=Time, f=Freq, remove - and ()).
+6. Merges xData, yDta, and subjectData into one data frame using cbind().
+7. Creates a new data frame with the average of each mean and standard deviation variable for each subject nd activity using ddply() and colMeans().
+8. Writes the data frame to a file called ./data/UCIHARAverageData.txt in the local directory.
