@@ -15,6 +15,8 @@ The experiments were conducted with 30 volunteers, ranging in age from 19-48 yea
 
 The accelerometer and gyroscope signals were pre-processed by applying noise filters and then sampled in fixed-width sliding windows of 2.56 sec and 50% overlap (128 readings/window). The acceleration signal, which has gravitational and body motion components, was separated using a Butterworth low-pass filter into body acceleration and gravity. The gravitational force is assumed to have only low frequency components, therefore a filter with 0.3 Hz cutoff frequency was used. From each window, a vector of features was obtained by calculating variables from the time and frequency domain.
 
+Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals. The magnitude of these three-dimensional signals were also calculated using the Euclidean norm. Finally a Fast Fourier Transform (FFT) was applied to some of these signals to produce magnitude measurements. These signals were used to estimate variables of the feature vector for each pattern.
+
 Each record provided:
 * A subject identifier
 * Activity labels
@@ -35,3 +37,27 @@ The dataset was comprised of the following files:
 * train/Inertial Signals/total_acc_x_train.txt: The acceleration signal from the smartphone accelerometer X axis in standard gravity units 'g'. Every row shows a 128 element vector. The same description applies for the 'total_acc_x_train.txt' and 'total_acc_z_train.txt' files for the Y and Z axis. 
 * train/Inertial Signals/body_acc_x_train.txt: The body acceleration signal obtained by subtracting the gravity from the total acceleration. 
 * train/Inertial Signals/body_gyro_x_train.txt: The angular velocity vector measured by the gyroscope for each window sample. The units are radians/second. 
+
+A full description of the dataset can be found here:
+http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
+
+The data can be found here:
+https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
+
+**Reference:**  Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. Human Activity Recognition on Smartphones using a Multiclass Hardware-Friendly Support Vector Machine. International Workshop of Ambient Assisted Living (IWAAL 2012). Vitoria-Gasteiz, Spain. Dec 2012.
+
+## The Script
+run_analysis.R performs the following steps:
+1. Downloads and unzips the data files into a local directory using dir.create(), download.file(), setwd(), and unzip().
+2. Reads the following files into tables using read.table():
+* features.txt
+* activity_labels.txt
+* X_test.txt
+* y_test.txt
+* subject_test.txt
+* X_train.txt
+* y_train.txt
+* subject_train.txt
+3. Merges the test and train data tables using rbind() to create 3 data frames: xData, yData, and subjectData.
+4. Extracts all variables with mean or standard deviation measurements using grep() and regular expression to locate features containing mean() or std() and subsetting them into xData.
+5. Applies descriptive activity labels and variable names by 1) indexing the ativityLables table to the yData table; 2) using colnames() to names the subject and activity variables in subjectData and yData; and 3) and using colnames(), gsub(), and regular expressions to to substitute or remove parts of feature names (e.g. t=Time, f=Freq, remove - and ())
