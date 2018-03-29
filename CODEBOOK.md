@@ -1,5 +1,5 @@
 # Codebook for UCIHARAverageData.txt
-
+All of the variables in this dataset are derived from the Human Activity Recognition Using Smartphones dataset produced by the Smartlab at the University of Genova, Italy. All variables with mean or standard deviation measures were extracted and the averages for these measures for each subject and activity are presented here.
 ## Variables
 * Subject: Subject identifier (1-30)
 * Activity: Activity labels (LAYING, SITTING, STANDING, WALKING, WALKING_DOWNSTAIRS,WALKING_UPSTAIRS)               
